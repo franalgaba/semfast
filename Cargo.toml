@@ -1,0 +1,27 @@
+[workspace]
+members = [
+    "crates/semfast-core",
+    "crates/semfast-cli",
+    "packages/semfast-node/native/semfast_node",
+]
+resolver = "2"
+
+[workspace.package]
+edition = "2024"
+license = "Apache-2.0"
+repository = "https://github.com/franalgaba/semfast"
+
+[workspace.dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+criterion = "0.7"
+napi = "3"
+napi-build = "2"
+napi-derive = "3"
+rand = "0.9"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tempfile = "3"
+thiserror = "2"
+turbovec = { git = "https://github.com/RyanCodrai/turbovec", package = "turbovec" }
+walkdir = "2"

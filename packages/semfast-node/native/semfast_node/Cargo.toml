@@ -1,0 +1,22 @@
+[package]
+name = "semfast-node-native"
+version = "0.1.0"
+description = "Native N-API binding for the Semfast TypeScript package"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lib]
+crate-type = ["cdylib"]
+name = "semfast_node_native"
+
+[dependencies]
+napi.workspace = true
+napi-derive.workspace = true
+semfast-core = { path = "../../../../crates/semfast-core", features = ["real-embeddings"] }
+serde.workspace = true
+serde_json.workspace = true
+walkdir.workspace = true
+
+[build-dependencies]
+napi-build.workspace = true

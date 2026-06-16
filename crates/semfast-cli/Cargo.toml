@@ -1,0 +1,22 @@
+[package]
+name = "semfast-cli"
+version = "0.1.0"
+description = "Command-line tools for building, querying, inspecting, and benchmarking Semfast indexes"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+clap.workspace = true
+semfast-core = { path = "../semfast-core" }
+serde.workspace = true
+serde_json.workspace = true
+walkdir.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[features]
+default = []
+real-embeddings = ["semfast-core/real-embeddings"]

@@ -1,0 +1,22 @@
+[package]
+name = "semfast-core"
+version = "0.1.0"
+description = "Local-first semantic retrieval core with TurboVec, BM25, and hybrid search"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+fastembed = { version = "5.16.0", default-features = false, features = ["hf-hub", "ort-load-dynamic"], optional = true }
+rand.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+turbovec.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[features]
+default = []
+real-embeddings = ["dep:fastembed"]

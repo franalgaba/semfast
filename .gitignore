@@ -1,0 +1,17 @@
+/target/
+/.fastembed_cache/
+/packages/*/node_modules/
+/packages/*/dist/
+/examples/*/node_modules/
+/examples/*/.vite/
+/examples/*/dist/
+/examples/*/data/index/
+/examples/*/data/beir/
+/examples/*/data/scifact/
+/examples/*/vendor/
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+*.node
