@@ -2,7 +2,44 @@
 
 Local-first semantic retrieval for AI agents, voice agents, and realtime copilots.
 
-Semfast builds a portable local index once, loads it into a Rust or Bun runtime, and answers retrieval queries without a hosted vector database in the hot path. The current artifact format combines MiniLM embeddings, TurboVec vector search, BM25 lexical search, and hybrid fusion.
+Semfast is an open-source retrieval runtime for applications that need semantic search to happen inside the running agent process, not behind a network call. It builds a portable index once, loads that artifact locally, and serves low-latency hybrid retrieval from Rust or Bun/TypeScript.
+
+The project is designed for realtime systems where retrieval latency is part of the user experience: voice agents, browser copilots, customer-support copilots, local-first AI tools, and embedded agent runtimes. Instead of sending every query to a hosted vector database, Semfast lets an application package the retrieval artifact with the runtime and query it directly.
+
+## Capabilities
+
+- Build local retrieval artifacts from files or JSONL documents.
+- Query artifacts from Rust, CLI, or Bun/TypeScript through a native N-API binding.
+- Run semantic, lexical, or hybrid search with `vector`, `bm25`, and `hybrid` query modes.
+- Use TurboVec for local vector search.
+- Use BM25 for keyword-sensitive retrieval.
+- Use MiniLM embeddings through FastEmbed/ONNX Runtime for real semantic retrieval.
+- Use deterministic hash embeddings for fixtures, smoke tests, and reproducible synthetic benchmarks.
+- Inspect artifacts and verify backend metadata before loading them in production.
+- Measure component timings for embedding, vector search, BM25, filtering, fusion, and hydration.
+- Run warmed latency benchmarks and TypeScript wrapper-overhead benchmarks.
+- Serve a long-lived local index from Hono for Bun applications.
+- Validate retrieval behavior interactively with the BEIR/SciFact example app.
+
+## Why Semfast Exists
+
+Most retrieval stacks assume a service boundary: documents live in a hosted vector database, queries cross the network, and the application waits for a remote retrieval result before the model can respond. That architecture is flexible, but it is not always the right fit for realtime agents.
+
+Voice agents and copilots often need retrieval in the same latency budget as transcription, planning, and response generation. A network hop can dominate that budget, introduce tail latency, and make offline or embedded use cases harder. Semfast explores a different shape: build the index ahead of time, ship the artifact, load it once, and keep retrieval local.
+
+Semfast is not trying to replace every vector database. It is for cases where the working set can be packaged, synced, or downloaded as an artifact, and where predictable local query latency matters more than remote multi-tenant database features.
+
+## How It Works
+
+Semfast artifacts combine:
+
+- document chunks and metadata,
+- MiniLM or deterministic test embeddings,
+- TurboVec vector index files,
+- BM25 lexical index files,
+- a manifest describing the embedding model, vector backend, dimensions, and artifact version.
+
+At query time, Semfast embeds the query locally, searches the vector index, optionally runs BM25, fuses the scores, hydrates chunk metadata, and returns ranked results without calling a hosted retrieval service.
 
 ## Current Benchmark
 
